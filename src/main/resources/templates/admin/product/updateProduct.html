@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/admin/admin_layout}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<th:block layout:fragment="content" th:remove="tag">
+    <div class="row">
+        <div class="col-sm-3 text-center">
+            <img src="http://placehold.it/380x500" alt="" width="80%" height="50%" class="img-rounded img-responsive"/>
+        </div>
+        <div class="col-sm-9 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="card-title text-center">Thông tin sản phẩm</h4>
+                    <form class="forms-sample" id="profileForm">
+                        <div class="form-group">
+                            <label for="code">Mã sản phẩm</label>
+                            <input type="text" class="form-control" id="code" placeholder="Mã sản phẩm">
+                            <p id="code_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="name">Tên sản phẩm</label>
+                            <input type="text" class="form-control" id="name" placeholder="Tên  sản phẩm">
+                            <p id="name_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label>Hình ảnh</label>
+                            <div class="input-group">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text" id="imageinput">Upload</span>
+                                </div>
+                                <div class="custom-file">
+                                    <input type="file" class="custom-file-input" id="image"
+                                           aria-describedby="imageinput">
+                                    <label class="custom-file-label" for="image">Choose image</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="provide">Nhà cung cấp</label>
+                            <input type="text" class="form-control" id="provide" placeholder="Nhà cung cấp">
+                            <p id="provide_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="category">Danh mục</label>
+                            <select class="form-control" id="category" name="category">
+                                <option value="0" name="category" selected="true">Office</option>
+                                <option value="1" name="category">Workstation</option>
+                                <option value="2" name="category">Gaming</option>
+                            </select>
+                            <p id="category_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="cost">Giá</label>
+                            <input type="text" class="form-control" id="cost" placeholder="Giá sản phẩm">
+                            <p id="cost_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="quantity">Số lượng</label>
+                            <input type="number" class="form-control" id="quantity" placeholder="Số lượng sản phẩm">
+                            <p id="quantity_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="ram">RAM</label>
+                            <select class="form-control" id="ram" name="ram">
+                                <option value="512" name="ram" selected="true">512MB</option>
+                                <option value="1024" name="ram">1024MB</option>
+                                <option value="2048" name="ram">2048MB</option>
+                                <option value="4096" name="ram">4096MB</option>
+                            </select>
+                            <p id="ram_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="cpu">CPU</label>
+                            <select class="form-control" id="cpu" name="cpu">
+                                <option value="512" name="cpu" selected="true">i3</option>
+                                <option value="1024" name="cpu">i5</option>
+                                <option value="2048" name="cpu">i7</option>
+                                <option value="4096" name="cpu">i7 gen5</option>
+                            </select>
+                            <p id="cpu_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="storage">Ổ cứng</label>
+                            <select class="form-control" id="storage" name="storage">
+                                <option value="512" name="storage" selected="true">512MB</option>
+                                <option value="1024" name="storage">1024MB</option>
+                                <option value="2048" name="storage">2048MB</option>
+                                <option value="4096" name="storage">4096MB</option>
+                            </select>
+                            <p id="storage_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="os">Hệ điều hành</label>
+                            <select class="form-control" id="os" name="os">
+                                <option value="0" name="os" selected="true">linux</option>
+                                <option value="1" name="os">win10</option>
+                                <option value="2" name="os">win8</option>
+                                <option value="3" name="os">win7</option>
+                            </select>
+                            <p id="os_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="graphic">Đồ họa</label>
+                            <select class="form-control" id="graphic" name="graphic">
+                                <option value="0" name="graphic" selected="true">HD Graphics</option>
+                                <option value="1" name="graphic">SD graphics</option>
+                            </select>
+                            <p id="graphic_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="screen">Màn hình</label>
+                            <select class="form-control" id="screen" name="screen">
+                                <option value="0" name="screen" selected="true">16 inch</option>
+                                <option value="1" name="screen">18 inch</option>
+                            </select>
+                            <p id="screen_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="power">Công suất</label>
+                            <input type="text" class="form-control" id="power" placeholder="Công suất">
+                            <p id="power_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="weight">Khối lượng</label>
+                            <input type="text" class="form-control" id="weight" placeholder="Khối lượng">
+                            <p id="weight_errors" class="error"></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="makeTime">Năm phát hành</label>
+                            <input type="text" class="form-control" id="makeTime" placeholder="Năm phát hành">
+                            <p id="makeTime_errors" class="error"></p>
+                        </div>
+                        <button type="submit" id="submitForm" class="btn btn-primary mr-2">Lưu</button>
+                        <button type="submit" class="btn btn-secondary">Hủy bỏ</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</th:block>
+<th:block layout:fragment="custom" th:remove="tag">
+
+</th:block>
+</body>
+</html>

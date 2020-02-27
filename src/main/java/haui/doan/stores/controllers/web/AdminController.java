@@ -1,11 +1,16 @@
 package haui.doan.stores.controllers.web;
 
+import haui.doan.stores.business.CategoryService;
+import haui.doan.stores.domain.Category;
+import haui.doan.stores.framework.CommonConstant;
 import haui.doan.stores.framework.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin")
@@ -15,6 +20,9 @@ public class AdminController {
     //Inject
     @Autowired
     private Settings settings;
+
+    @Autowired
+    private CategoryService categoryService;
 
 
     @GetMapping("/home")
@@ -34,7 +42,21 @@ public class AdminController {
     @GetMapping("/product")
     public ModelAndView viewProduct() {
         ModelAndView mav = new ModelAndView();
-        mav.setViewName("admin/product");
+        mav.setViewName("admin/product/product");
+        return mav;
+    }
+
+    @GetMapping("/product/create")
+    public ModelAndView viewProductForm() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("admin/product/updateProduct");
+        return mav;
+    }
+
+    @GetMapping("/product/edit")
+    public ModelAndView editProduct() {
+        ModelAndView mav = new ModelAndView();
+        mav.setViewName("admin/product/updateProduct");
         return mav;
     }
 
@@ -55,6 +77,8 @@ public class AdminController {
     @GetMapping("/category")
     public ModelAndView viewCategory() {
         ModelAndView mav = new ModelAndView();
+        List<Category> categoryList = categoryService.findCategoryByStatus(CommonConstant.STATUS.NO_DELETE);
+        mav.addObject("categories", categoryList);
         mav.setViewName("admin/category");
         return mav;
     }
