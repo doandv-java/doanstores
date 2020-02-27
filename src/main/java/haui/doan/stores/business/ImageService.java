@@ -6,9 +6,11 @@ import haui.doan.stores.framework.CommonConstant;
 import haui.doan.stores.framework.Settings;
 import haui.doan.stores.persistents.ImageRepository;
 import haui.doan.stores.utils.FileUtils;
+import haui.doan.stores.utils.StringUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.nio.file.Path;
 
@@ -32,7 +34,12 @@ public class ImageService {
         if (checkImage) {
             return getDefaultImage();
         } else {
-            Image image = imageRepository.getOne(request.getId());
+            Image image;
+            if (StringUtils.isEmpty(request.getId())) {
+                image = new Image();
+            } else {
+                image = imageRepository.getOne(request.getId());
+            }
             FileUtils.deletePath(image.getUrl());
             String name = FileUtils.store(request.getImage(), Path.of(settings.getImageRoot().getPath()));
             String url = new StringBuilder("/").append(settings.getImageRoot().getPath()).append("/").append(name).toString();

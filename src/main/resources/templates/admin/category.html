@@ -32,7 +32,7 @@
                             <tr th:each="category:${categories}">
                                 <td th:text="${category.getId()}"></td>
                                 <td th:text="${category.getName()}"></td>
-                                <td><img th:src="${category.getImage().getUrl()}" class="image-item"/></td>
+                                <td><img th:src="@{${category.getImage().getUrl()}}" class="image-item"></td>
                                 <td>
                                     <a href="javascript:void(0)" class="fa fa-edit text-success"
                                        th:onclick="'editCategory('+${category.getId()}+')'"></a>
@@ -51,7 +51,7 @@
     </div>
 
     <!--            Delete Product Modal-->
-    <div class="modal fade" id="deleteProduct" tabindex="-1" role="dialog" aria-labelledby="deleteProduct"
+    <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="deleteCategory"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -62,7 +62,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p>Bạn muốn xóa sản phẩm phải không?</p>
+                    <p id="deleteError">Bạn muốn xóa danh mục sản phẩm phải không?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -73,92 +73,53 @@
     </div>
 
     <!--            Detail Modal-->
-    <div class="modal fade" id="detailProductModal" tabindex="-1" role="dialog" aria-labelledby="detailProductModal"
+    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModal"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Thông tin sản phẩm</h4>
+                    <h4 class="modal-title w-100 font-weight-bold">Thông tin danh mục</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
-                <div class="modal-body mx-3">
-                    <section class="card">
-                        <div class="card-header user-header alt bg-dark">
-                            <div class="media">
-                                <a href="#">
-                                    <img class="align-self-center rounded-circle mr-3"
-                                         style="width:100px; height:100px;" alt="Ảnh sản phẩm"
-                                         th:src="@{/static/images/admin.jpg}">
-                                </a>
-                                <div class="media-body">
-                                    <h3 class="text-light display-9" id="name">Tên sản phẩm</h3>
-                                    <p class="text-primary" id="category">Loại sản phẩm</p>
+                <div class="modal-body">
+                    <div class="card">
+                        <img id="image_view" class="card-img-top" th:src="@{images/placeholder.png}"
+                             alt="Card image cap">
+                        <div class="card-body">
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" placeholder="Tên danh mục">
+                                <label id="name_errors" class="error"></label>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="imageinput">Upload</span>
+                                    </div>
+                                    <div class="custom-file">
+                                        <input type="file" class="custom-file-input" id="image"
+                                               aria-describedby="imageinput">
+                                        <label class="custom-file-label" for="image">Choose image</label>
+                                    </div>
                                 </div>
                             </div>
+                            <div>
+                                <input type="hidden" id="id">
+                                <input type="hidden" id="status">
+                                <input type="hidden" id="nameOld">
+                                <input type="hidden" id="imageId">
+                            </div>
                         </div>
-                        <ul class="list-group list-group-flush">
-                            <li class="list-group-item">
-                                <i class="fa  fa-users"> Nhà cung cấp</i><span class="pull-right"
-                                                                               id="provide">Dell</span>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="fa fa-suitcase"> Số lượng trong kho</i><span
-                                    class="badge badge-primary pull-right" id="quanity">300</span>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="fa fa-money"> Giá</i><span class="badge badge-primary pull-right">300</span>
-                            </li>
-                            <li class="list-group-item">
-                                <i class="fa fa-list-alt"> Thông tin chi tiết</i>
-                                <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">RAM</i><span class="badge badge-primary pull-right"
-                                                                               id="ram">512<span>MB</span></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">CPU</i><span class="badge badge-primary pull-right"
-                                                                               id="cpu">Intel core i5</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Ổ cứng</i><span class="badge badge-primary pull-right"
-                                                                                  id="storage">SSD 512GB</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Công suất</i><span
-                                            class="badge badge-primary pull-right" id="power">50<span>W</span></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Hệ điều hành</i><span
-                                            class="badge badge-primary pull-right" id="os">Window 10 Home</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Khối lượng</i><span
-                                            class="badge badge-primary pull-right" id="weight">512<span>g</span></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Đồ họa</i><span class="badge badge-primary pull-right"
-                                                                                  id="graphics">Intel HD 4000 HD</span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Màn hình</i><span
-                                            class="badge badge-primary pull-right"
-                                            id="screen">15.6<span> inch</span></span>
-                                    </li>
-                                    <li class="list-group-item">
-                                        <i class="fa fa-asterisk">Thời gian ra mắt</i><span
-                                            class="badge badge-primary pull-right" id="makeTime">2019</span>
-                                    </li>
-                                </ul>
-                            </li>
-                        </ul>
-
-                    </section>
-
+                    </div>
                 </div>
-                <div class="modal-footer d-flex justify-content-center">
-                    <button class="btn btn-success" id="okBtn">OK</button>
+                <div class="card-footer">
+                    <button type="button" id="btnSave" class="btn btn-primary btn-sm">
+                        <i class="fa fa-dot-circle-o"></i> Save
+                    </button>
+                    <button type="button"  id="btnClose" class="btn btn-danger btn-sm">
+                        <i class="fa fa-ban"></i> Cancel
+                    </button>
                 </div>
             </div>
         </div>
@@ -166,32 +127,7 @@
 </th:block>
 <!--Custom JS-->
 <th:block layout:fragment="custom" th:remove="tag">
-    <script type="text/javascript">
-        jQuery('#categoryTable').dataTable();
-
-        function deleteCategory() {
-            let deleteProductModal = jQuery('#deleteProduct');
-            deleteProductModal.modal('show');
-            jQuery("#deleteProductBtn").click(function () {
-                //console.log
-                console.log("Xóa");
-                //ajax xoa
-                deleteProductModal.modal('hide');
-            });
-        }
-
-        function editCategory() {
-            let detailProductModal = jQuery('#detailProductModal');
-            detailProductModal.modal('show');
-            jQuery('#okBtn').click(function () {
-                detailProductModal.modal('hide');
-            });
-        }
-
-        function createCategory() {
-
-        }
-    </script>
+    <script type="text/javascript" th:src="@{/assets/js/admin/category.js}"></script>
 </th:block>
 
 </body>
