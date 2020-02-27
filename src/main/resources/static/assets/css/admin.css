@@ -1,0 +1,8 @@
+/*class error when send form of tag p*/
+.error {
+    color:red;
+    text-transform: capitalize;
+    margin: 5px;
+    font-style: italic;
+    font-size: small;
+}

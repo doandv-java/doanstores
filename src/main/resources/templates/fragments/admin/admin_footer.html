@@ -1,0 +1,18 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<body>
+<th:block th:fragment="footer">
+    <script th:src="@{/vendors/jquery/dist/jquery.min.js}"></script>
+    <script th:src="@{/vendors/popper.js/dist/umd/popper.min.js}"></script>
+    <script th:src="@{/vendors/bootstrap/dist/js/bootstrap.min.js}"></script>
+    <script th:src="@{/assets/js/main.js}"></script>
+
+    <script th:src="@{/vendors/chart.js/dist/Chart.bundle.min.js}"></script>
+    <script th:src="@{/assets/js/dashboard.js}"></script>
+    <script th:src="@{/assets/js/widgets.js}"></script>
+    <!--    Custom Js-->
+    <script th:src="@{/assets/js/admin.home.js}"></script>
+
+</th:block>
+</body>
+</html>

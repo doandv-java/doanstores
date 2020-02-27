@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <title>Doan Stores</title>
+
+    <link rel="apple-touch-icon" href="apple-icon.png">
+    <link rel="shortcut icon" href="favicon.ico">
+
+    <link rel="stylesheet" th:href="@{/vendors/bootstrap/dist/css/bootstrap.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/font-awesome/css/font-awesome.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/themify-icons/css/themify-icons.css}">
+    <link rel="stylesheet" th:href="@{/vendors/flag-icon-css/css/flag-icon.min.css}">
+    <link rel="stylesheet" th:href="@{/vendors/selectFX/css/cs-skin-elastic.css}">
+    <!--    <link rel="stylesheet" href="../vendors/jqvmap/dist/jqvmap.min.css">-->
+
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/admin.css}">
+
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,700,800" rel="stylesheet"
+          type="text/css">
+
+</head>
+<body>
+<th:block th:replace="fragments/admin/admin_aside::aside"></th:block>
+<div id="right-panel" class="right-panel">
+    <th:block th:replace="fragments/admin/admin_header::header"></th:block>
+    <div class="content mt-3">
+        <th:block layout:fragment="content"/>
+    </div>
+    <!--            Modal check Logout-->
+    <div class="modal fade" id="logoutConfirm" tabindex="-1" role="dialog" aria-labelledby="staticModalLabel"
+         data-backdrop="static" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="staticModalLabel">Xác nhận</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>
+                        Bạn muốn thoát khỏi chương trình phải không?
+                    </p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Hủy</button>
+                    <button type="button" id="deleteButton" class="btn btn-primary">Xác nhận</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<th:block th:replace="fragments/admin/admin_footer::footer"></th:block>
+<th:block layout:fragment="custom"/>
+</body>
+</html>

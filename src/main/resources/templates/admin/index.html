@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+      layout:decorate="~{fragments/admin/admin_layout}">
+<head>
+    <meta charset="UTF-8">
+</head>
+<body>
+<th:block layout:fragment="content" th:remove="tag">
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-flat-color-1">
+            <div class="card-body pb-0">
+                <h4 class="mb-0">
+                    <span class="count">10468</span>
+                </h4>
+                <p class="text-light">Khách hàng</p>
+            </div>
+
+        </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-flat-color-2">
+            <div class="card-body pb-0">
+                <h4 class="mb-0">
+                    <span class="count">10468</span>
+                </h4>
+                <p class="text-light">Đơn hàng</p>
+            </div>
+        </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-flat-color-3">
+            <div class="card-body pb-0">
+                <h4 class="mb-0">
+                    <span class="count">10468</span>
+                </h4>
+                <p class="text-light">Sản phẩm được bán</p>
+
+            </div>
+
+        </div>
+    </div>
+    <!--/.col-->
+
+    <div class="col-sm-6 col-lg-3">
+        <div class="card text-white bg-flat-color-4">
+            <div class="card-body pb-0">
+                <h4 class="mb-0">
+                    <span class="count">10468 <i class="menu-icon fa fa-money"></i></span>
+                </h4>
+                <p class="text-light">Số tiền bán hàng</p>
+
+            </div>
+        </div>
+    </div>
+</th:block>
+</body>
+</html>
