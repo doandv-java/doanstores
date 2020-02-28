@@ -1,8 +1,10 @@
 package haui.doan.stores.controllers.web;
 
 import haui.doan.stores.business.CategoryService;
+import haui.doan.stores.business.ProductService;
 import haui.doan.stores.business.ProvideService;
 import haui.doan.stores.domain.Category;
+import haui.doan.stores.domain.Product;
 import haui.doan.stores.domain.Provide;
 import haui.doan.stores.framework.CommonConstant;
 import haui.doan.stores.framework.Settings;
@@ -25,11 +27,14 @@ public class AdminController {
 
     private final ProvideService provideService;
 
+    private final ProductService productService;
+
     @Autowired
-    public AdminController(Settings settings, CategoryService categoryService, ProvideService provideService) {
+    public AdminController(Settings settings, CategoryService categoryService, ProvideService provideService, ProductService productService) {
         this.settings = settings;
         this.categoryService = categoryService;
         this.provideService = provideService;
+        this.productService = productService;
     }
 
 
@@ -50,6 +55,8 @@ public class AdminController {
     @GetMapping("/product")
     public ModelAndView viewProduct() {
         ModelAndView mav = new ModelAndView();
+        List<Product> products = productService.findProductByStatus(CommonConstant.STATUS.NO_DELETE);
+        mav.addObject("products", products);
         mav.setViewName("admin/product/product");
         return mav;
     }

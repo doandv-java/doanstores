@@ -32,9 +32,9 @@
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td>SP1</td>
-                                <td><img th:src="@{/static/images/avatar/1.jpg}" class="image-item"/></td>
+                            <tr th:each="product:${products}" th:id="${product.getId()}">
+                                <td th:text="${product.getCode()}"></td>
+                                <td><img th:src="@{${product.getImage().getUrl()}}" class="image-item"/></td>
                                 <td>Dell SP114dsfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfsdfdsfsdf
                                     dfsdfsdfsdfsdf
                                 </td>
@@ -175,6 +175,7 @@
 <!--Custom JS-->
 <th:block layout:fragment="custom" th:remove="tag">
     <script type="text/javascript">
+
         jQuery('#productTable').dataTable();
 
         function deleteProduct() {
@@ -194,7 +195,6 @@
             jQuery('#okBtn').click(function () {
                 detailProductModal.modal('hide');
             });
-
         }
     </script>
 </th:block>
