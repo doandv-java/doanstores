@@ -37,6 +37,10 @@ public class Product extends BaseEntity {
     @Column(name = "provide_id", insertable = false, updatable = false)
     private Long provideId;
 
+    @OneToOne
+    @JoinColumn(name = "provide-id", referencedColumnName = "id", nullable = false)
+    private Provide provide;
+
     @Column(name = "quantity")
     private int quantity;
 
@@ -55,6 +59,7 @@ public class Product extends BaseEntity {
 
     @Column(name = "cpu")
     private String cpu;
+
     @Column(name = "storage")
     private String storage;
 
