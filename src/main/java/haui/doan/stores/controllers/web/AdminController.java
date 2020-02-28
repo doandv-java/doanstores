@@ -1,7 +1,9 @@
 package haui.doan.stores.controllers.web;
 
 import haui.doan.stores.business.CategoryService;
+import haui.doan.stores.business.ProvideService;
 import haui.doan.stores.domain.Category;
+import haui.doan.stores.domain.Provide;
 import haui.doan.stores.framework.CommonConstant;
 import haui.doan.stores.framework.Settings;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +19,18 @@ import java.util.List;
 public class AdminController {
     //constant
 
-    //Inject
-    @Autowired
-    private Settings settings;
+    private final Settings settings;
+
+    private final CategoryService categoryService;
+
+    private final ProvideService provideService;
 
     @Autowired
-    private CategoryService categoryService;
+    public AdminController(Settings settings, CategoryService categoryService, ProvideService provideService) {
+        this.settings = settings;
+        this.categoryService = categoryService;
+        this.provideService = provideService;
+    }
 
 
     @GetMapping("/home")
@@ -86,6 +94,8 @@ public class AdminController {
     @GetMapping("/provide")
     public ModelAndView viewProvide() {
         ModelAndView mav = new ModelAndView();
+        List<Provide> provideList = provideService.findProvidesByStatus(CommonConstant.STATUS.NO_DELETE);
+        mav.addObject("provides", provideList);
         mav.setViewName("admin/provide");
         return mav;
     }

@@ -84,7 +84,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public boolean existsCategory(String name, String nameOld) {
         if (!Strings.isEmpty(name)) {
-            Category category = categoryRepository.findCategoryByNameEquals(name);
+            Category category = categoryRepository.findCategoryByNameEqualsAndStatus(name,CommonConstant.STATUS.NO_DELETE);
             if (StringUtils.isEmpty(nameOld)) {
                 return category != null;
             } else {
@@ -98,13 +98,14 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public Category getDefaultCategory() {
-        Category category = categoryRepository.findCategoryByNameEquals(CommonConstant.DEFAULT_CATEGORY.NAME);
+        Category category = categoryRepository.findCategoryByNameEqualsAndStatus(CommonConstant.DEFAULT_CATEGORY.NAME,CommonConstant.STATUS.NO_DELETE);
         if (category == null) {
             Image image = imageService.getDefaultImage();
+            category = new Category();
             category.setName(CommonConstant.DEFAULT_CATEGORY.NAME);
             category.setImage(image);
             category.setImageId(image.getId());
-            category.setStatus(CommonConstant.STATUS.DELETE);
+            category.setStatus(CommonConstant.STATUS.NO_DELETE);
             return categoryRepository.save(category);
         }
         return category;

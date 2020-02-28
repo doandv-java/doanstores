@@ -1,10 +1,10 @@
 package haui.doan.stores.controllers.api;
 
-import haui.doan.stores.business.CategoryService;
-import haui.doan.stores.dto.request.CategoryRequest;
+import haui.doan.stores.business.ProvideService;
+import haui.doan.stores.dto.request.ProvideRequest;
 import haui.doan.stores.dto.response.ErrorResponse;
 import haui.doan.stores.framework.CommonConstant;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -19,25 +19,27 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-public class CategoryController {
-    @Autowired
-    private CategoryService categoryService;
+@RequiredArgsConstructor
+public class ProvideController {
 
-    @PostMapping(value = "/admin/category")
-    public Map<String, Object> saveCategory(@Valid CategoryRequest request, BindingResult result) {
+    private final ProvideService provideService;
+
+
+    @PostMapping("/admin/provide")
+    public Map<String, Object> saveProvide(@Valid ProvideRequest request, BindingResult result) {
         Map<String, Object> map = new HashMap<>();
         List<ErrorResponse> errors = new ArrayList<>();
         if (result.hasErrors()) {
-            result.getFieldErrors().forEach(fieldError -> {
+            result.getFieldErrors().stream().forEach(fieldError -> {
                 errors.add(new ErrorResponse(fieldError.getField(), fieldError.getDefaultMessage()));
             });
         }
-        if (categoryService.existsCategory(request.getName(), request.getNameOld())) {
-            errors.add(new ErrorResponse("name", "Name da ton tai"));
+        if (provideService.existProvide(request.getName(), request.getNameOld())) {
+            errors.add(new ErrorResponse("name", "Tên nhà cung cấp đã tồn tại"));
         }
         if (errors.isEmpty()) {
-            categoryService.saveCategory(request);
             map.put("status", 200);
+            provideService.saveProvide(request);
         } else {
             map.put("status", 101);
             map.put("errors", errors);
@@ -45,23 +47,21 @@ public class CategoryController {
         return map;
     }
 
-    @GetMapping("/admin/category/{id}")
-    public CategoryRequest getCategory(@PathVariable("id") Long id) {
-        CategoryRequest request = categoryService.findCategoryByIdAndStatus(id, CommonConstant.STATUS.NO_DELETE);
-        return request;
+    @GetMapping("/admin/provide/{id}")
+    public ProvideRequest edit(@PathVariable("id") Long id) {
+        return provideService.findProvideByIdAndStatus(id, CommonConstant.STATUS.NO_DELETE);
     }
 
-    @DeleteMapping("/admin/category/{id}")
-    public Map<String, Object> saveCategory(@PathVariable("id") Long id) {
+    @DeleteMapping("/admin/provide/{id}")
+    public Map<String, Object> deleteProvide(@PathVariable("id") Long id) {
         Map<String, Object> map = new HashMap<>();
-        CategoryRequest flag = categoryService.findCategoryByIdAndStatus(id, CommonConstant.STATUS.NO_DELETE);
-        if (flag == null) {
+        ProvideRequest provide = provideService.findProvideByIdAndStatus(id, CommonConstant.STATUS.NO_DELETE);
+        if (provide == null) {
             map.put("status", 101);
         } else {
             map.put("status", 200);
-            categoryService.delete(id);
+            provideService.deleteProvide(id);
         }
         return map;
     }
-
 }

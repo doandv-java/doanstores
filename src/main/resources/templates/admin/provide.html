@@ -13,31 +13,35 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <strong class="card-title">Danh sách các danh mục sản phẩm</strong>
+                        <strong class="card-title">Danh sách các nhà cung cấp sản phẩm</strong>
                     </div>
                     <div class="card-body">
-                        <table id="categoryTable" class="table table-striped table-bordered text-center">
+                        <table id="provideTable" class="table table-striped table-bordered text-center">
                             <thead>
                             <tr>
-                                <th>ID</th>
-                                <th>Tên loại</th>
-                                <th>Hình ảnh</th>
+                                <th>Ảnh</th>
+                                <th>Nhà cung cấp</th>
+                                <th>Số điện thoại</th>
+                                <th>Địa chỉ</th>
+                                <th>Email</th>
                                 <th>
-                                    <a href="javascript:void(0)" th:onclick="createCategory()"><i
+                                    <a href="javascript:void(0)" th:onclick="createProvide()"><i
                                             class="fa fa-plus text-primary">Add</i></a>
                                 </th>
                             </tr>
                             </thead>
                             <tbody>
-                            <tr th:each="category:${categories}">
-                                <td th:text="${category.getId()}"></td>
-                                <td th:text="${category.getName()}"></td>
-                                <td><img th:src="@{${category.getImage().getUrl()}}" class="image-item"></td>
+                            <tr th:each="provide:${provides}">
+                                <td><img th:src="@{${provide.getImage().getUrl()}}" class="image-item"></td>
+                                <td th:text="${provide.getName()}"></td>
+                                <td th:text="${provide.getPhone()}"></td>
+                                <td th:text="${provide.getAddress()}"></td>
+                                <td th:text="${provide.getEmail()}"></td>
                                 <td>
                                     <a href="javascript:void(0)" class="fa fa-edit text-success"
-                                       th:onclick="'editCategory('+${category.getId()}+')'"></a>
+                                       th:onclick="'editProvide('+${provide.getId()}+')'"></a>
                                     <a href="javascript:void(0)" class="fa fa-trash text-danger"
-                                       th:onclick="'deleteCategory('+${category.getId()}+')'"></a>
+                                       th:onclick="'deleteProvide('+${provide.getId()}+')'"></a>
                                 </td>
                             </tr>
                             </tbody>
@@ -50,8 +54,8 @@
         </div>
     </div>
 
-    <!--            Delete Product Modal-->
-    <div class="modal fade" id="deleteCategory" tabindex="-1" role="dialog" aria-labelledby="deleteCategory"
+    <!--            Delete provide Modal-->
+    <div class="modal fade" id="deleteProvide" tabindex="-1" role="dialog" aria-labelledby="deleteProvide"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -62,23 +66,23 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <p id="deleteError">Bạn muốn xóa danh mục sản phẩm phải không?</p>
+                    <p id="deleteError">Bạn muốn xóa nhà cung cấp này không?</p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" id="deleteProductBtn" class="btn btn-danger">Delete</button>
+                    <button type="button" id="deleteProvideBtn" class="btn btn-danger">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 
     <!--            Detail Modal-->
-    <div class="modal fade" id="categoryModal" tabindex="-1" role="dialog" aria-labelledby="categoryModal"
+    <div class="modal fade" id="provideModal" tabindex="-1" role="dialog" aria-labelledby="categoryModal"
          aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header text-center">
-                    <h4 class="modal-title w-100 font-weight-bold">Thông tin danh mục</h4>
+                    <h4 class="modal-title w-100 font-weight-bold">Thông tin nhà cung cấp</h4>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -91,10 +95,6 @@
                         </div>
                         <div class="card-body">
                             <div class="form-group">
-                                <input type="text" class="form-control" id="name" placeholder="Tên danh mục">
-                                <label id="name_errors" class="error"></label>
-                            </div>
-                            <div class="form-group">
                                 <div class="input-group">
                                     <div class="input-group-prepend">
                                         <span class="input-group-text" id="imageinput">Upload</span>
@@ -105,6 +105,22 @@
                                         <label class="custom-file-label" for="image">Choose image</label>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="name" placeholder="Tên nhà cung cấp">
+                                <label id="name_errors" class="error"></label>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" id="email" placeholder="Email">
+                                <label id="email_errors" class="error"></label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="phone" placeholder="Số điện thoại">
+                                <label id="phone_errors" class="error"></label>
+                            </div>
+                            <div class="form-group">
+                                <input type="text" class="form-control" id="address" placeholder="Địa chỉ">
+                                <label id="address_errors" class="error"></label>
                             </div>
                             <div>
                                 <input type="hidden" id="id">
@@ -127,10 +143,8 @@
         </div>
     </div>
 </th:block>
-<!--Custom JS-->
 <th:block layout:fragment="custom" th:remove="tag">
-    <script type="text/javascript" th:src="@{/assets/js/admin/category.js}"></script>
+    <script type="text/javascript" th:src="@{/assets/js/admin/provide.js}"></script>
 </th:block>
-
 </body>
 </html>
